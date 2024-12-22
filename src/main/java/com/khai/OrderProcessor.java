@@ -3,8 +3,8 @@ package com.khai;
 public class OrderProcessor {
     private NotificationService notificationService;
 
-    public OrderProcessor() {
-        this.notificationService = new NotificationService();
+    public OrderProcessor(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     public void processOrder(Order order) {
