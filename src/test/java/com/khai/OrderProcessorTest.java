@@ -1,7 +1,10 @@
 package com.khai;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class OrderProcessorTest {
 
@@ -61,5 +64,23 @@ public class OrderProcessorTest {
         assertEquals("Desktop Computer Purchase", order1.getDescription());
         assertEquals(606, order2.getId());
         assertEquals("Smartwatch Purchase", order2.getDescription());
+    }
+
+    @Test
+    public void testProcessOrder() {
+        // Создаем мок объекта NotificationService
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
+
+        // Передаем мок в OrderProcessor
+        OrderProcessor orderProcessor = new OrderProcessor(mockNotificationService);
+
+        // Создаем тестовый заказ
+        Order order = new Order(1, "Test Order");
+
+        // Вызываем метод processOrder
+        orderProcessor.processOrder(order);
+
+        // Проверяем, что метод notify был вызван ОДИН раз
+        verify(mockNotificationService, times(1)).notify(order);
     }
 }
